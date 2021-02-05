@@ -1,6 +1,8 @@
 import turtle
 import winsound
 
+# initialize a window for the game
+
 wn = turtle.Screen()
 wn.title("Pong by @PhoenixMina")
 wn.bgcolor("black")
@@ -32,12 +34,12 @@ paddle_b.goto(350, 0)
 # Ball
 ball = turtle.Turtle()
 ball.speed(0)
-ball.shape("square")
-ball.color("white")
+ball.shape("circle")
+ball.color("red")
 ball.penup()
 ball.goto(0, 0)
-ball.dx = 1/10
-ball.dy = 1/10
+ball.dx = 0.2
+ball.dy = 0.2
 
 # Pen
 pen = turtle.Turtle()
@@ -84,6 +86,15 @@ while True:
     ball.setx(ball.xcor() + ball.dx)
     ball.sety(ball.ycor() + ball.dy)
     
+    if paddle_b.ycor() >= 250:
+        paddle_b.sety(250)
+    if paddle_b.ycor() <= -250:
+        paddle_b.sety(-250)
+    if paddle_a.ycor() >= 250:
+        paddle_a.sety(250)
+    if paddle_a.ycor() <= -250:
+        paddle_a.sety(-250)
+
     # Border checking
     if ball.ycor() > 290:
         ball.sety(290)
@@ -102,7 +113,6 @@ while True:
         pen.clear()
         pen.write(f"Player A: {score_a}  Player B: {score_b}", align="center", font=("Courier", 24, "normal"))
 
-
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx *= -1
@@ -111,12 +121,12 @@ while True:
         pen.write(f"Player A: {score_a}  Player B: {score_b}", align="center", font=("Courier", 24, "normal"))
 
     # Paddle and ball collisions
-    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
+    if (ball.xcor() > 339 and ball.xcor() < 350) and (ball.ycor() < (paddle_b.ycor() + 45) and ball.ycor() > (paddle_b.ycor() - 45)):
         ball.setx(330)
         ball.dx *= -1
         winsound.PlaySound('D:\Coding\python games\pong\oing.wav', winsound.SND_ASYNC)
 
-    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
+    if (ball.xcor() < -339 and ball.xcor() > -350) and (ball.ycor() < (paddle_a.ycor() + 45) and ball.ycor() > (paddle_a.ycor() - 45)):
         ball.setx(-330)
         ball.dx *= -1
         winsound.PlaySound('D:\Coding\python games\pong\oing.wav', winsound.SND_ASYNC)
